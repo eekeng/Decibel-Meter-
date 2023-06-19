@@ -1,5 +1,9 @@
 
 function runApp() {
+  decibelMeter();
+}
+
+function decibelMeter(){
 
 navigator.mediaDevices.getUserMedia({ audio: true, video: false }) .then(stream => {
     const audioContext = new AudioContext();
@@ -17,7 +21,8 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: false }) .then(stream 
       decibelValue.textContent = negativeDecibels.toFixed();
       colourChange(decibels);
       isRunning(runApp);
-      notRunning(stopApp);
+      
+      
     }
 
     function analyzeAudio(){
@@ -30,10 +35,10 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: false }) .then(stream 
       sum += storedData[i];
     }
     
-    // Calculate the average magnitude
+    
     const average = sum / storedData.length;
     
-    // Convert the average magnitude to decibels (dB)
+    
     const decibels = 38 * Math.log10(average);
 
 
@@ -57,7 +62,6 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: false }) .then(stream 
  function colourChange(decibels){
     if (decibels <= 35){
       document.body.style.backgroundColor = "green";
-      document.getElementById("text").innerHTML = " ";
       document.getElementById("text").innerHTML = "The audio is at a safe level";
     }
     else if (decibels >=40 && decibels <=60) {
@@ -72,7 +76,6 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: false }) .then(stream 
  }
 
  var functionsIsRunning = false;
- var functionNotRunning = false;
  
 
 
@@ -80,22 +83,10 @@ function isRunning(){
   if(!functionsIsRunning){
     functionsIsRunning = true;
     document.getElementById("button").disabled = true;
+    //document.getElementById("stopButton").disabled = false;
     }
   }
 
-  function notRunning (){
-    if(!functionNotRunning){
-      functionNotRunning = true
-      document.getElementById("stopButton").disabled = false;
-    }
-  }
-
-
-  function stopApp(){
-  if(!isRunning){
-    return;
-  }
-}
 }
 
 
